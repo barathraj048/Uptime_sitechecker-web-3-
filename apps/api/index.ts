@@ -23,16 +23,48 @@ app.post("/api/v1/website",authMiddleware,async(req ,res)=> {
 
 })
 
-app.get("/api/v1/websites",authMiddleware,(req ,res)=> {
-
+app.get("/api/v1/websites/status",authMiddleware,async(req ,res)=> {
+   try{
+      const website =req.params.websiteId
+      const userId=req.userId!;
+   
+      const data=await prismaClient.website.findFirst({
+         where:{
+            id:website,
+            userId,
+            dissabled:false
+         },
+         include:{
+            websiteTick: true
+         }
+      })
+   
+      res.json(data)
+   }catch(err){
+      res.status(500).json({error:"Something went wrong in get-website"})
+   }
 })
 
-app.get("api/v1/website/status",authMiddleware,(req ,res)=> {
-
+app.get("api/v1/website",authMiddleware,async(req ,res)=> {
+   const userId=req.userId
+   const data =await prismaClient.website.findMany({
+      where:{
+         userId,
+         dissabled:false
+      }
+   })
 })
 
-app.delete("/api/v1/website",authMiddleware,(req,res)=> {
-
+app.delete("/api/v1/website",authMiddleware,async(req,res)=> {
+   const website=req.params.websiteId
+   await prismaClient.website.update({
+      where:{
+         id:website
+      },
+      data:{
+         dissabled:true
+      }
+   })
 })
 
 app.listen(3000,()=> {
