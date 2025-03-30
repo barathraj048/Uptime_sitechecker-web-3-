@@ -20,10 +20,11 @@ const ThemeImage = (props: Props) => {
 };
 
 export default function Home() {
+  const {data:session} =useSession();
   return (
     <div className={styles.page}>
-      <button onClick={()=> signIn()}>
-        Signin 
+      <button onClick={()=> session ? signOut() : signIn("google")}>
+        {session ? "Sign Out" : "Sign In"}
       </button>
     </div>
   );
