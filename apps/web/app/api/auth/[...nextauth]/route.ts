@@ -70,7 +70,7 @@ export const authOptions: AuthOptions = {
     }    
   },
 };
-
+    
 async function refreshAccessToken(token: any) {
   try {
     const response = await fetch("https://oauth2.googleapis.com/token", {
