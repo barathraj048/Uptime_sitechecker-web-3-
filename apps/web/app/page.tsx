@@ -16,47 +16,7 @@ interface Monitor {
 function App() {
   const [isDark, setIsDark] = useState(false);
   const [expandedMonitor, setExpandedMonitor] = useState<string | null>(null);
-  const [monitors] = useState<Monitor[]>([
-    {
-      id: '1',
-      name: 'Production API',
-      url: 'api.example.com',
-      status: 'up',
-      uptime: 99.98,
-      lastChecked: '30 seconds ago',
-      responseTime: 187,
-      responseHistory: Array.from({ length: 30 }, (_, i) => ({
-        time: `${29 - i}m ago`,
-        value: Math.floor(Math.random() * 100) + 150
-      }))
-    },
-    {
-      id: '2',
-      name: 'Marketing Website',
-      url: 'www.example.com',
-      status: 'degraded',
-      uptime: 99.45,
-      lastChecked: '1 minute ago',
-      responseTime: 892,
-      responseHistory: Array.from({ length: 30 }, (_, i) => ({
-        time: `${29 - i}m ago`,
-        value: Math.floor(Math.random() * 400) + 700
-      }))
-    },
-    {
-      id: '3',
-      name: 'Customer Dashboard',
-      url: 'dashboard.example.com',
-      status: 'down',
-      uptime: 98.76,
-      lastChecked: '2 minutes ago',
-      responseTime: 2344,
-      responseHistory: Array.from({ length: 30 }, (_, i) => ({
-        time: `${29 - i}m ago`,
-        value: Math.floor(Math.random() * 1000) + 1500
-      }))
-    }
-  ]);
+  const [monitors] = useState<Monitor[]>([]);
 
   useEffect(() => {
     if (isDark) {
