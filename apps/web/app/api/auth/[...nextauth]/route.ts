@@ -12,7 +12,10 @@ export const authOptions: AuthOptions = {
       authorization: { params: { prompt: "consent", access_type: "offline" } },
     }),
   ],
-  
+  session : {
+    strategy: "jwt",
+  },
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ account, profile }) {
       if (!profile?.email) return false;
@@ -44,6 +47,8 @@ export const authOptions: AuthOptions = {
         });
 
         if (userDB) {
+          token.id = userDB.id; // 👈 Add user ID
+          token.email = userDB.email;
           token.accessToken = userDB.accessToken;
           token.refreshToken = userDB.refreshToken;
           token.expiresAt = userDB.expiresAt;
