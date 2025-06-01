@@ -138,10 +138,18 @@ function App() {
               <button
                 className="px-4 py-2 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700"
                 onClick={() => {
-                  console.log(`Adding monitor for: ${site}`);
-                  axios.post("/api/v1/website", { url: site });
+                  try{
+                    console.log(`Adding monitor for: ${site}`);
+                    axios.post("/api/v1/website-add", { url: site },
+                    {headers : {
+                      Authorization: `Bearer ${token}`,
+                    }}
+                  );
                   setToggleAdd(false);
                   setSite("");
+                  }catch (err){
+                    console.error("Error adding monitor:", err);
+                  }
                 }}
               >
                 Submit

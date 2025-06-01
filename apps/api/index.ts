@@ -1,11 +1,13 @@
 import express from "express";
 import { authMiddleware } from "./middleware";
 import { prismaClient } from "db/client";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 
-app.post("/api/v1/website",authMiddleware,async(req ,res)=> {
+app.post("/api/v1/website",async(req ,res)=> {
    try{
       const userId=req.userId!;
       const {url}=req.body;
@@ -23,18 +25,21 @@ app.post("/api/v1/website",authMiddleware,async(req ,res)=> {
 
 })
 
-app.get("/api/v1/websites",authMiddleware,(req ,res)=> {
+app.get("/api/v1/website-add",(req ,res)=> {
+   const userId=req.userId;
+   const {url}=req.query;
+   res.json({message:"Website recived successfully"});
+   console.log("User ID:", userId , "URL:", url);
+})
+
+app.get("api/v1/website/status",(req ,res)=> {
 
 })
 
-app.get("api/v1/website/status",authMiddleware,(req ,res)=> {
+app.delete("/api/v1/website",(req,res)=> {
 
 })
 
-app.delete("/api/v1/website",authMiddleware,(req,res)=> {
-
-})
-
-app.listen(3000,()=> {
-      console.log("Server is running on port 3000");
+app.listen(5000,()=> {
+      console.log("Server is running on port 5000");
 })
